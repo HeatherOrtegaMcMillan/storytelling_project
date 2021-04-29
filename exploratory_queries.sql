@@ -40,6 +40,7 @@ GROUP BY c.churn, payment_type
 ORDER BY customer_count DESC;
 
 -- are they streaming movies? 
+-- Looks like there are twice as many month to month customers 
 SELECT c.churn AS churn,
 c.streaming_movies AS movies,
 count(c.customer_id) AS customer_count
@@ -60,6 +61,7 @@ JOIN internet_service_types AS it ON it.internet_service_type_id = c.`internet_s
 JOIN contract_types AS ct ON ct.`contract_type_id` = c.contract_type_id
 JOIN payment_types AS pt ON pt.payment_type_id = c.payment_type_id
 GROUP BY c.churn, paperless, contract_type
+HAVING contract_type = 'Month-to-month'
 ORDER BY paperless, c.churn;
 
 -- monthly charges were higher on average for people who churn 
@@ -81,5 +83,10 @@ SELECT c.churn AS churn,
 AVG(c.tenure) AS avg_tenure
 FROM customers AS c
 GROUP BY churn;
+
+SELECT AVG(`monthly_charges`)
+FROM customers;
+
+
 
 
