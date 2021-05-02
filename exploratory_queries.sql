@@ -68,12 +68,21 @@ ORDER BY paperless, c.churn;
 -- but is it higher proportionally, because 1869 churned and 5174 didn't
 -- churn monthly average is $74.44
 -- stayed on monthly average is $61.27
+-- in month to month customers average monthly charge was $12 higher
+-- Month to month customers who churned: $73.02	1655
+-- month to month customers who stayed: $61.46	2220
 
 SELECT c.churn AS churn,
 AVG(c.monthly_charges) AS avg_monthly_charge,
 count(*) AS customer_count
 FROM customers AS c
+WHERE c.contract_type_id = 1
 GROUP BY churn;
+
+SELECT `dependents`, partner
+FROM customers;
+
+
 
 -- average tenure before churn
 -- probably not super useful just because obviously people who haven't churned are still there
